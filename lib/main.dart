@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyTodoApp());
+  runApp(MyApp());
 }
 
-class MyTodoApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -111,10 +111,7 @@ class _TodoAddState extends State<TodoAddPage> {
                     });
                   }
                 },
-                child: Text(
-                  'リスト追加',
-                  style: TextStyle(color: Colors.white),
-                ),
+                child: Text('リスト追加', style: TextStyle(color: Colors.white)),
               ),
             ),
             Container(
