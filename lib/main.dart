@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:test3/model/TodoModel.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +18,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      // リスト一覧画面を表示
       home: TodoListPage(),
     );
   }
@@ -30,8 +30,8 @@ class TodoListPage extends StatefulWidget {
 }
 
 class _TodoListPageState extends State<TodoListPage> {
-  List<String> todoList = [];
-  String _title = 'リスト一覧';
+  final _title = 'リスト一覧';
+  TodoListModel _todoListModel = TodoListModel();
 
   @override
   Widget build(BuildContext context) {
@@ -40,28 +40,36 @@ class _TodoListPageState extends State<TodoListPage> {
         title: Text(_title),
       ),
       body: ListView.builder(
-        itemCount: todoList.length,
+        itemCount: _todoListModel.todoListModel.length,
         itemBuilder: (context, index) {
           return Card(
             child: ListTile(
-              title: Text(todoList[index]),
-              onTap: () {
-                print('${index + 1}行目リストタップ');
-              },
+              title: Text(_todoListModel.todoListModel[index].todoTitle),
+              trailing: Checkbox(
+                onChanged: (value) {
+                  setState(() {
+                    _todoListModel.todoListModel[index].isCheckd =
+                        _todoListModel.todoListModel[index].isCheckd
+                            ? false
+                            : true;
+                  });
+                },
+                value: _todoListModel.todoListModel[index].isCheckd,
+              ),
             ),
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final newListText = await Navigator.of(context).push(
+          final _todo = await Navigator.of(context).push(
             MaterialPageRoute(builder: (context) {
               return TodoAddPage();
             }),
           );
-          if (newListText != null) {
+          if (_todo != null) {
             setState(() {
-              todoList.add(newListText);
+              _todoListModel.todoListModel.add(_todo);
             });
           }
         },
@@ -80,6 +88,8 @@ class TodoAddPage extends StatefulWidget {
 class _TodoAddState extends State<TodoAddPage> {
   String _title = 'リスト追加';
   String _text = '';
+
+  TodoModel _todoModel = TodoModel('', false);
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +114,9 @@ class _TodoAddState extends State<TodoAddPage> {
               child: ElevatedButton(
                 onPressed: () {
                   if (_text != "") {
-                    Navigator.of(context).pop(_text);
+                    _todoModel.todoTitle = _text;
+                    _todoModel.isCheckd = true;
+                    Navigator.of(context).pop(_todoModel);
                   } else {
                     setState(() {
                       _text = 'TODOを入力してください';
