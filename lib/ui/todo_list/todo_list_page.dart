@@ -13,6 +13,8 @@ class TodoListPage extends StatefulWidget {
 class _TodoListPageState extends State<TodoListPage> {
   TodoListModel _todoListModel = TodoListModel();
 
+  final _textFieldController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +38,42 @@ class _TodoListPageState extends State<TodoListPage> {
                 },
                 value: _todoListModel.todoListModel[index].isCheckd,
               ),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (_) {
+                    return AlertDialog(
+                      title: Text("TODOタスクを変更"),
+                      content: TextField(
+                        controller: _textFieldController,
+                        decoration: InputDecoration(
+                          hintText: "タスクを入力",
+                        ),
+                      ),
+                      actions: [
+                        ElevatedButton(
+                            child: Text("Cancel"),
+                            onPressed: () {
+                              _textFieldController.text = "";
+                              Navigator.pop(context);
+                            }),
+                        ElevatedButton(
+                          child: Text("OK"),
+                          onPressed: () {
+                            setState(() {
+                              _todoListModel.todoListModel[index].todoTitle =
+                                  _textFieldController.text;
+                              _textFieldController.text = "";
+                              Navigator.pop(context);
+                            });
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
             ),
           );
         },
