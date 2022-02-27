@@ -1,4 +1,4 @@
-# Flutter トレーニングアプリ　　TODOApp
+# Flutter トレーニングアプリ　TODO APP
 
 A new Flutter project.
 
