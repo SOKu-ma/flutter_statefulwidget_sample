@@ -49,7 +49,7 @@ class _TodoAddState extends State<TodoAddPage> {
                     });
                   }
                 },
-                child: Text('TODOタスク追加', style: TextStyle(color: Colors.white)),
+                child: Text('保存', style: TextStyle(color: Colors.white)),
               ),
             ),
             Container(
