@@ -57,7 +57,7 @@ class _TodoListPageState extends State<TodoListPage> {
                       barrierDismissible: false,
                       builder: (_) {
                         return AlertDialog(
-                          title: Text("TODOタスクを変更"),
+                          title: Text("タスクを変更"),
                           content: TextField(
                             controller: _textFieldController,
                             decoration: InputDecoration(
